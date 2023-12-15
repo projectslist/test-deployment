@@ -1,6 +1,25 @@
 #!/bin/bash
 
-# Change directory to the project directory
+# Function to check if a command is available
+command_exists() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+# Function to install Docker if not already installed
+install_docker() {
+  if ! command_exists docker; then
+    echo "Docker is not installed. Installing Docker..."
+    # Add Docker installation commands here
+    # For example, on Ubuntu:
+    # sudo apt-get update
+    # sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+  fi
+}
+
+# Install Docker if not already installed
+install_docker
+
+# Change directory to the project directory with the full path
 cd /home/ubuntu/test_project || exit 1
 
 # Find the full path to docker-compose dynamically
