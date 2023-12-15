@@ -23,5 +23,8 @@ echo "Current PATH: $PATH"
 # Change directory to the project directory with the full path
 cd /home/ubuntu/test_project || exit 1
 
-# Use the explicitly set full path to docker-compose to build Docker containers
-/usr/local/bin/docker-compose -f /home/ubuntu/test_project/docker_compose_prod.yml build --no-cache
+# Sleep for a few seconds to ensure PATH is fully set
+sleep 5
+
+# Use the dynamically found docker-compose path to build Docker containers
+docker-compose -f /home/ubuntu/test_project/docker_compose_prod.yml build --no-cache
