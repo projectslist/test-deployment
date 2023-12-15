@@ -18,8 +18,11 @@ install_docker_compose() {
 # Install Docker Compose if not already installed
 install_docker_compose
 
+# Add the user to the docker group
+sudo usermod -aG docker $USER
+
 # Print the PATH for debugging
 echo "Current PATH: $PATH"
 
-# Use the correct full path to docker-compose to build Docker containers
-/usr/bin/docker-compose -f /home/ubuntu/test_project/docker_compose_prod.yml build --no-cache
+# Run Docker Compose with sudo
+sudo /usr/bin/docker-compose -f /home/ubuntu/test_project/docker_compose_prod.yml build --no-cache
