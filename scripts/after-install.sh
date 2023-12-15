@@ -12,9 +12,9 @@ else
     echo "docker-compose not found. Installing..."
 
     # Download docker-compose to the project directory
-    sudo curl -L "https://github.com/docker/compose/releases/download/{version}/docker-compose-$(uname -s)-$(uname -m)" -o docker-compose || exit 1
-    sudo chmod +x docker-compose || exit 1
-    DOCKER_COMPOSE_CMD="./docker-compose"
+    sudo curl -L "https://github.com/docker/compose/releases/download/{version}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose || exit 1
+    sudo chmod +x /usr/local/bin/docker-compose || exit 1
+    DOCKER_COMPOSE_CMD="/usr/local/bin/docker-compose"
 fi
 
 # Build the Docker containers
