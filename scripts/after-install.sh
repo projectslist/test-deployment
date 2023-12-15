@@ -7,19 +7,16 @@ cd /home/ubuntu/test_project || exit 1
 if command -v docker-compose >/dev/null 2>&1; then
     echo "docker-compose is installed, proceeding with build."
 else
-    # If docker-compose is not found, install it
+    # If docker-compose is not found, install it in the project directory
     echo "docker-compose not found. Installing..."
 
-    # Update the installation command to handle potential issues with the shell
-    sudo curl -L "https://github.com/docker/compose/releases/download/{version}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose || exit 1
-    sudo chmod +x /usr/local/bin/docker-compose || exit 1
-
-    # Verify the installation
-    docker-compose --version || exit 1
+    # Download docker-compose to the project directory
+    sudo curl -L "https://github.com/docker/compose/releases/download/{version}/docker-compose-$(uname -s)-$(uname -m)" -o docker-compose || exit 1
+    sudo chmod +x docker-compose || exit 1
 fi
 
 # Build the Docker containers
-docker-compose -f docker_compose_prod.yml build --no-cache
+./docker-compose -f docker_compose_prod.yml build --no-cache
 
 # Check the exit status of the docker-compose command
 if [ $? -eq 0 ]; then
