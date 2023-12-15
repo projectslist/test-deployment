@@ -12,5 +12,5 @@ if [ -z "$DOCKER_COMPOSE_PATH" ]; then
     exit 1
 fi
 
-# Build Docker containers using docker-compose
+# Use the dynamically found docker-compose path to build Docker containers
 $DOCKER_COMPOSE_PATH -f /home/ubuntu/test_project/docker_compose_prod.yml build --no-cache
