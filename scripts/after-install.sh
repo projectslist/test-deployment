@@ -9,8 +9,13 @@ if command -v docker-compose >/dev/null 2>&1; then
 else
     # If docker-compose is not found, install it
     echo "docker-compose not found. Installing..."
-    sudo curl -L "https://github.com/docker/compose/releases/download/{version}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    sudo chmod +x /usr/local/bin/docker-compose
+
+    # Update the installation command to handle potential issues with the shell
+    sudo curl -L "https://github.com/docker/compose/releases/download/{version}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose || exit 1
+    sudo chmod +x /usr/local/bin/docker-compose || exit 1
+
+    # Verify the installation
+    docker-compose --version || exit 1
 fi
 
 # Build the Docker containers
