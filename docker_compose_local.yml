@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: python3 manage.py runserver 0.0.0.0:8000
+    ports:
+      - 8000:8000
+    env_file:
+      - env/.env.dev
+
+  database_dev:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=hello_world
+      - POSTGRES_PASSWORD=hello_world
+      - POSTGRES_DB=hello_world
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=postgres
+    restart: always
+    ports:
+      - 8070:80
+    depends_on:
+      - database_dev
+
+volumes:
+  postgres_data:
