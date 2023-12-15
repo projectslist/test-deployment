@@ -13,7 +13,7 @@ command_exists() {
 
 # Function to install Docker Compose if not already installed
 install_docker_compose() {
-  if ! command_exists docker-compose; then
+  if ! command_exists /usr/local/bin/docker-compose; then
     echo "Docker Compose is not installed. Installing Docker Compose..."
     sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
@@ -26,5 +26,5 @@ install_docker_compose
 # Print the PATH for debugging
 echo "Current PATH: $PATH"
 
-# Use the dynamically found docker-compose path to build Docker containers
-docker-compose -f /home/ubuntu/test_project/docker_compose_prod.yml build --no-cache
+# Use the explicitly set full path to docker-compose to build Docker containers
+/usr/local/bin/docker-compose -f /home/ubuntu/test_project/docker_compose_prod.yml build --no-cache
