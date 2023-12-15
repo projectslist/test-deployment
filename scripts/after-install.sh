@@ -9,10 +9,19 @@ command_exists() {
 install_docker() {
   if ! command_exists docker; then
     echo "Docker is not installed. Installing Docker..."
-    # Add Docker installation commands here based on your system
-    # For example, on Ubuntu:
-    sudo apt-get update
-    sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+
+    # Use package manager based on the system
+    if command_exists apt-get; then
+      sudo apt-get update
+      sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+    elif command_exists yum; then
+      sudo yum install -y docker
+    elif command_exists apk; then
+      sudo apk add docker
+    else
+      echo "Unsupported package manager. Please install Docker manually."
+      exit 1
+    fi
   fi
 }
 
