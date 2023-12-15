@@ -9,10 +9,10 @@ command_exists() {
 install_docker() {
   if ! command_exists docker; then
     echo "Docker is not installed. Installing Docker..."
-    # Add Docker installation commands here
+    # Add Docker installation commands here based on your system
     # For example, on Ubuntu:
-    # sudo apt-get update
-    # sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+    sudo apt-get update
+    sudo apt-get install -y docker-ce docker-ce-cli containerd.io
   fi
 }
 
@@ -23,7 +23,7 @@ install_docker
 cd /home/ubuntu/test_project || exit 1
 
 # Find the full path to docker-compose dynamically
-DOCKER_COMPOSE_PATH=$(which docker-compose)
+DOCKER_COMPOSE_PATH=$(command -v docker-compose)
 
 # Check if docker-compose is found
 if [ -z "$DOCKER_COMPOSE_PATH" ]; then
