@@ -16,7 +16,7 @@ else
 fi
 
 # Build the Docker containers
-./docker-compose -f docker_compose_prod.yml build --no-cache
+/home/ubuntu/test_project/docker-compose -f docker_compose_prod.yml build --no-cache
 
 # Check the exit status of the docker-compose command
 if [ $? -eq 0 ]; then
