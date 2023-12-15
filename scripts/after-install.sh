@@ -17,14 +17,14 @@ install_docker_compose() {
 # Install Docker Compose if not already installed
 install_docker_compose
 
+# Explicitly set the PATH before running docker-compose
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/usr/local/bin:$PATH"
+
 # Print the PATH for debugging
 echo "Current PATH: $PATH"
 
 # Change directory to the project directory with the full path
 cd /home/ubuntu/test_project || exit 1
 
-# Source the user's environment to ensure PATH is fully set
-source /etc/environment
-
-# Use the dynamically found docker-compose path to build Docker containers
+# Use the explicitly set full path to docker-compose to build Docker containers
 docker-compose -f /home/ubuntu/test_project/docker_compose_prod.yml build --no-cache
