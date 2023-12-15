@@ -17,6 +17,9 @@ install_docker_compose() {
 # Install Docker Compose if not already installed
 install_docker_compose
 
+# Print the PATH to check for debugging
+echo "Current PATH: $PATH"
+
 # Change directory to the project directory with the full path
 cd /home/ubuntu/test_project || exit 1
 
