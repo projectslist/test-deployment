@@ -5,40 +5,20 @@ command_exists() {
   command -v "$1" >/dev/null 2>&1
 }
 
-# Function to install Docker if not already installed
-install_docker() {
-  if ! command_exists docker; then
-    echo "Docker is not installed. Installing Docker..."
-
-    # Use package manager based on the system
-    if command_exists apt-get; then
-      sudo apt-get update
-      sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-    elif command_exists yum; then
-      sudo yum install -y docker
-    elif command_exists apk; then
-      sudo apk add docker
-    else
-      echo "Unsupported package manager. Please install Docker manually."
-      exit 1
-    fi
+# Function to install Docker Compose if not already installed
+install_docker_compose() {
+  if ! command_exists docker-compose; then
+    echo "Docker Compose is not installed. Installing Docker Compose..."
+    sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
   fi
 }
 
-# Install Docker if not already installed
-install_docker
+# Install Docker Compose if not already installed
+install_docker_compose
 
 # Change directory to the project directory with the full path
 cd /home/ubuntu/test_project || exit 1
 
-# Find the full path to docker-compose dynamically
-DOCKER_COMPOSE_PATH=$(command -v docker-compose)
-
-# Check if docker-compose is found
-if [ -z "$DOCKER_COMPOSE_PATH" ]; then
-    echo "Error: docker-compose not found. Make sure it is installed and in your system's PATH."
-    exit 1
-fi
-
 # Use the dynamically found docker-compose path to build Docker containers
-$DOCKER_COMPOSE_PATH -f /home/ubuntu/test_project/docker_compose_prod.yml build --no-cache
+docker-compose -f /home/ubuntu/test_project/docker_compose_prod.yml build --no-cache
